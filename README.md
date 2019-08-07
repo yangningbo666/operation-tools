@@ -1,2 +1,2 @@
 # operation-tools
-Some tools of operation witen by ningbo
+Some tools for operation writen by ningbo.
