@@ -55,6 +55,7 @@ if __name__ == "__main__":
     pos = nx.circular_layout(G)
     nx.draw_circular(G, with_labels=True,edges=edges, font_size=8, edge_color=colors, node_color='lightyellow', node_size = 1500,width=0.8)
     nx.draw_networkx_edge_labels(G, pos, edge_labels =labels, font_size=6, label_pos=0.7,  font_color='r',rotate=True,clip_on=True)
-    plt.show()
     plt.savefig("network.png")
+    plt.show()
+
     
