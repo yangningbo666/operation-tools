@@ -47,5 +47,6 @@ echo "1234" |mail -s "test" yangningbo@xxx.com
 ### 功能
 1. 节点可以输入汉字，节点颜色可以选择
 2. 边上可以加入汉字
+
 ![图](https://github.com/yangningbo666/operation-tools/blob/master/data-flow-network/network.png)
 
