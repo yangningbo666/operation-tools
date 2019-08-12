@@ -42,7 +42,7 @@ if __name__ == "__main__":
         smtp_host = 'localhost'
         port = 25 
         sender_address ='root'
-        receiver_address = 'yangningbo@huawei.com;shine.zhangqiang@huawei.com'
+        receiver_address = 'yangningbo@xxx.com;yangningbo1@xxx.com'
         cc_receiver_address = ''
         subject='python test from yangjian'
         content='弱密码-'+str(time.asctime(time.localtime(time.time())))
