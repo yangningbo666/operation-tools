@@ -31,6 +31,6 @@ vi /etc/hosts
 
 
 4.发送测试邮件
-echo "1234" |mail -s "test" yangningbo@xxx.com
+echo "1234" |mail -s "test" xxx@xxx.com
 
 

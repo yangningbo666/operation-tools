@@ -53,8 +53,8 @@ if __name__ == "__main__":
     colors = [G[u][v]['color'] for u,v in edges]
     labels = dict([((u,v,),d['label'])for u,v,d in G.edges(data=True)])
     pos = nx.circular_layout(G)
-    nx.draw_circular(G, with_labels=True,edges=edges, font_size=8, edge_color=colors, node_color='lightyellow', node_size = 1500,width=0.8)
-    nx.draw_networkx_edge_labels(G, pos, edge_labels =labels, font_size=6, label_pos=0.7,  font_color='r',rotate=True,clip_on=True)
+    nx.draw_circular(G, with_labels=True, edges=edges, font_color='black', font_size=8, edge_color=colors, node_color='lightyellow', node_size = 1500, width=0.8)
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=labels, font_size=6, label_pos=0.7,  font_color='r', rotate=True,clip_on=True)
     plt.savefig("network.png")
     plt.show()
 
