@@ -85,7 +85,7 @@ if __name__ == "__main__":
     smtp_host = 'localhost'
     port = 25 
     sender_address ='root'
-    cc_receiver_address = "yangningbo@huawei.com"
+    cc_receiver_address = "xxxxx@xxx.com"
     summary_table = read_from_csv(SUMMARY_TABLE)[1:]
     person_list = get_person(summary_table)
     i = 0
