@@ -43,7 +43,7 @@ def get_access_path():
     tmp1 = subprocess.Popen(['ps -efw'], stdout=subprocess.PIPE, shell=True)
     tmp2 = subprocess.Popen(
         ['grep nginx'], stdin=tmp1.stdout, stdout=subprocess.PIPE, shell=True)
-    ps_tmp = tmp2.stdout.read().decode()
+    ps_tmp = tmp2.stdout.read()
     lines = ps_tmp.split('\n')
     for line in lines:
         if 'master process' in line:
@@ -55,12 +55,12 @@ def get_access_path():
         return response_code, conf_path, log_path
     pid = process_tmp[1]
     tmp5 = subprocess.Popen(['ls -l /proc/' + pid + "/exe"], stdout=subprocess.PIPE, shell=True)
-    proc_tmp = tmp5.stdout.read().decode()
+    proc_tmp = tmp5.stdout.read()
     nginx_path = proc_tmp.split()[-1]
     prefix_path = nginx_path.split('sbin')[0]
     find_sp = subprocess.Popen(
         ['find ' + prefix_path + ' -name nginx.conf'], stdout=subprocess.PIPE, shell=True)
-    conf_path = find_sp.stdout.read().decode().strip('\n')
+    conf_path = find_sp.stdout.read().strip('\n')
     print("conf_path", conf_path)
     if conf_path == '':
         response_code = NO_NGINX_CONF
@@ -69,7 +69,7 @@ def get_access_path():
                             stdout=subprocess.PIPE, shell=True)
     tmp4 = subprocess.Popen(
         ['grep access.log'], stdin=tmp3.stdout, stdout=subprocess.PIPE, shell=True)
-    cat_res = tmp4.stdout.read().decode().split('\n')
+    cat_res = tmp4.stdout.read().split('\n')
     if cat_res == '':
         response_code = NO_NGINX_LOG
         return response_code, conf_path, log_path
