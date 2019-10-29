@@ -1,4 +1,5 @@
-#coding: utf-8
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
 ## define encironment
                 ##1 邮箱登录信息
                 ##2 发件人和收件人信息
@@ -10,11 +11,16 @@
 ## define encironment
 import time
 import smtplib
+import logging
 import email.mime.multipart
 import email.mime.text
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
+
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s')
+
 
 def send_email(smtp_host, port, sender_address, receiver_address, cc_receiver_address='', subject='', content='', attach_path='', attach_file = ''):
     msg = email.mime.multipart.MIMEMultipart()

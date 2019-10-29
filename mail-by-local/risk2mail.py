@@ -1,19 +1,14 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
 import pandas as pd
 import time
 import csv
 import logging
-logger = logging.getLogger(__name__)
-logger.setLevel(level = logging.INFO)
-handler = logging.FileHandler("log.txt")
-handler.setLevel(logging.INFO)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-handler.setFormatter(formatter)
 
-console = logging.StreamHandler()
-console.setLevel(logging.INFO)
 
-logger.addHandler(handler)
-logger.addHandler(console)
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s')
 
 date = time.strftime("%Y%m", time.localtime())
 EASY_PASSWORD = date + "_EasyPassword" + ".csv"
@@ -36,7 +31,7 @@ def read_from_csv(filename):
     csv_lines = csv.reader(open(filename, 'r', encoding="UTF-8"))
     for line in csv_lines:
         info_arr.append(line)
-    logger.info(filename+"--finish read!")
+    logging.info(filename+"--finish read!")
     return info_arr
 
 
@@ -48,7 +43,7 @@ def read_from_txt(filename):
             if "=" not in line:
                 info_arr.append(line.split(":")[0])
     info_arr = list(set(info_arr))
-    logger.info(filename+"--finish read!")
+    logging.info(filename+"--finish read!")
     return info_arr
 
 
@@ -60,7 +55,7 @@ def list2csv(filename, name, data):
     # data = [[row[i] for row in data] for i in range(len(data[0]))]
     writerCSV=pd.DataFrame(data=data, columns= name)
     writerCSV.to_csv(filename, encoding="utf_8_sig", index=None)
-    logger.info(filename+"--finish write!")
+    logging.info(filename+"--finish write!")
 
 def preprocess_easy_password(data, host_type, keyword):
     new_data = []
@@ -68,7 +63,7 @@ def preprocess_easy_password(data, host_type, keyword):
         if line[HOST_TYPE_INDEX] == host_type and keyword not in line[USER_INDEX]:
             continue
         new_data.append(line)
-    logger.info("Delate line that are not ROOT user in Mysql type！")
+    logging.info("Delate line that are not ROOT user in Mysql type！")
     return new_data
     
 def person2mail(persons, mail_query):
@@ -77,7 +72,7 @@ def person2mail(persons, mail_query):
     for person in person_list:
         mail_index = mail_query[mail_query[0] == person].index.tolist()
         if mail_index == []:
-            logger.error(person, "--DO NOT HAVE EMAIL,please add it in " + MAIL_QUERY+",and redo this process!")
+            logging.error(person, "--DO NOT HAVE EMAIL,please add it in " + MAIL_QUERY+",and redo this process!")
             #print("NO MAIL----", person)
             continue
         else:
@@ -118,7 +113,7 @@ if __name__ == '__main__':
         tmp[6] = host_query[10][host_index]
         tmp[7] = person2mail(host_query[5][host_index], mail_query)
         final_result.append(tmp)
-    logger.info(HOST_QUERY+"--finish!")
+    logging.info(HOST_QUERY+"--finish!")
     for i in range(len(redis)):
         tmp = ['' for _ in range(8)] 
         host_index = 0
@@ -140,6 +135,6 @@ if __name__ == '__main__':
         tmp[6] = host_query[10][host_index]
         tmp[7] = person2mail(host_query[5][host_index], mail_query)
         final_result.append(tmp)
-    logger.info(REDIS+"--finish!")
+    logging.info(REDIS+"--finish!")
     list2csv(SUMMARY_TABLE, name, final_result)
-    logger.info(SUMMARY_TABLE+"--created!")
+    logging.info(SUMMARY_TABLE+"--created!")

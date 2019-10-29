@@ -1,22 +1,15 @@
-#coding: utf-8
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
 import csv
 import time
 import pandas as pd
 from mail_by_local import send_email
 import logging
 
-logger = logging.getLogger(__name__)
-logger.setLevel(level = logging.INFO)
-handler = logging.FileHandler("log.txt")
-handler.setLevel(logging.INFO)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-handler.setFormatter(formatter)
 
-console = logging.StreamHandler()
-console.setLevel(logging.INFO)
-
-logger.addHandler(handler)
-logger.addHandler(console)
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s')
 
 date = time.strftime("%Y%m", time.localtime())
 SUMMARY_TABLE = date + "_SummaryTable" + ".csv"
@@ -58,7 +51,7 @@ def get_mail_address(data, person):
             if len(tmp)>5:
                 mail_list = tmp[:-1]
             else:
-                logger.error(person, "--DO NOT HAVE EMAIL!please add it in MAIL_QUERY and redo previous process!")
+                logging.error(person, "--DO NOT HAVE EMAIL!please add it in MAIL_QUERY and redo previous process!")
             break
     return mail_list
 
@@ -103,6 +96,6 @@ if __name__ == "__main__":
                 subject = '弱密码'+str(date)
                 content = '{date},您所负责的业务名下弱密码的设备数有{host_num}台 '.format(date = date , host_num = host_num)
                 send_email(smtp_host, port, sender_address, receiver_address, cc_receiver_address, subject, content, attach_path, attach_file)
-                logger.info(person+"-- mail has sent!")
+                logging.info(person+"-- mail has sent!")
             except Exception as err:
-                logger.error(person+err)
+                logging.error(person+err)
